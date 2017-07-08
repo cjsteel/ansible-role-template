@@ -1,0 +1,52 @@
+---
+# file: roles/{{ role_short_name }}/tests/vagrant.yml
+
+- hosts: all
+  remote_user: ubuntu
+  become: false # or local directory creation will fail
+  pre_tasks:
+
+
+    - set_fact: fact_controller_user="{{ lookup('env','USER') }}"
+    - debug: var=fact_controller_user
+
+    - set_fact: fact_controller_home="{{ lookup('env','HOME') }}"
+    - debug: var=fact_controller_home
+
+    - set_fact: fact_role_path="{{ lookup('pipe','pwd')|dirname }}"
+    - debug: var=fact_role_path
+
+    - set_fact: fact_role_name="{{ lookup('pipe','pwd')|dirname|basename }}"
+    - debug: var=fact_role_name2
+
+  vars:
+
+    - {{ role_short_name }_parent_dir: '~/projects/dev/roles'
+    - {{ role_short_name }_short_name: 'nix'
+    - {{ role_short_name }_long_name: 'ansible-role-{{ role_short_name }}''
+    - {{ role_short_name }_description: 'An Ansible role to install and manage the Nix pack}{age manager'
+
+    - {{ role_short_name }_github_user: 'cjsteel'
+    - {{ role_short_name }_github_ssh_url: 'git@github.com:{{ role_github_user }}/{{ role_long_name }}.git'
+
+    - {{ role_short_name }_galaxy_user: 'cjsteel'
+    - {{ role_short_name }_galaxy_role_name: '{{ role_galaxy_user }}.{{ role_short_name }}
+
+    - {{ role_short_name }}_remote_user : 'ubuntu'
+
+    - {{ role_short_name }}_state         : 'present'
+    - {{ role_short_name }}_build         : false
+    - {{ role_short_name }}_reboot_target : false
+
+
+    - {{ role_short_name }}_git_version        : 'v2.1.0'
+    - {{ role_short_name }}_git_url            : 'git://github.com/stnava/{{ role_short_name }}.git'
+    - {{ role_short_name }}_git_parent_dir     : '~/bin'
+    - {{ role_short_name }}_git_target_dir     : 'acemenu'
+    - {{ role_short_name }}_git_target_path    : '~/bin/acemenu'
+
+  roles:
+    - ../../
+
+  
+

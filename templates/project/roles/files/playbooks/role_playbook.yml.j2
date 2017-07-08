@@ -1,0 +1,33 @@
+---
+# file: project_name/{{ short-role-name }}.yml
+
+- hosts: {{ short-role-name }}
+  become: false
+  gather_facts: true
+  pre_tasks:
+
+{% raw %}
+    - set_fact: fact_controller_user="{{ lookup('env','USER') }}"
+    - debug: var=fact_controller_user
+
+    - set_fact: fact_controller_home="{{ lookup('env','HOME') }}"
+    - debug: var=fact_controller_home
+
+#    - set_fact: fact_role_name="{{ lookup('env','ANSIBLE_ROLE_NAME') }}"
+#    - debug: var=fact_role_name
+
+    - set_fact: fact_role_name="{{ lookup('pipe','pwd')|dirname|basename }}"
+    - debug: var=fact_role_name2
+
+    - set_fact: fact_role_path="{{ lookup('pipe','pwd')|dirname }}"
+    - debug: var=fact_role_path
+{% endraw %}
+
+  roles:
+
+    - { role: {{ short-role-name }}, {{ short-role-name }}_state: 'absent', {{ short-role-name }}_ver: '2.0.3' }
+    - { role: {{ short-role-name }}, {{ short-role-name }}_state: 'present', {{ short-role-name }}_ver: '2.6.2' }
+  
+#    - { role: cjsteel.ansible-role-{{ short-role-name }}, {{ short-role-name }}_state: 'absent', {{ short-role-name }}_ver: '2.0.3' }
+#    - { role: cjsteel.ansible-role-{{ short-role-name }}, {{ short-role-name }}_state: 'present', {{ short-role-name }}_ver: '2.6.2' }
+

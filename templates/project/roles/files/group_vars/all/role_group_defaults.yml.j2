@@ -1,0 +1,18 @@
+
+---
+# file: group_vars/{{ role_short_name }}/project_defaults
+#
+#
+
+## Controller User Variables
+
+{% raw %}
+project_controller_user_name: 'controller_user_name_goes_here'
+project_controller_user_home: '/home/{{ project_controller_user_name }}'
+
+
+## Deploymebnt User Variables
+
+project_deployment_user_name: 'deployment_user_name_goes_here'
+project_deployment_user_home: '/home/{{ project_deployment_user_name }}'
+{% endraw %}
